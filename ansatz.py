@@ -127,6 +127,28 @@ def build_circuit(n_qubits, n_layers, opt=None):
         encoding_layer(qc, param_enc, 2)
 
         return qc, param_universal, param_enc
+    
+    elif opt == 'omega':
+        param_phi = ParameterVector('phi', 4)
+        param_state = ParameterVector('state', 2)
+
+        qc.h(0)
+        qc.h(1)
+    
+        qc.ry(param_phi[0], 0)
+        qc.rz(param_phi[1], 0)
+        qc.ry(param_phi[2], 1)
+        qc.rz(param_phi[3], 1)
+    
+        qc.ry(param_state[0], 0)
+        qc.ry(param_state[1], 1)
+        
+        qc.barrier()
+    
+        qc.cnot(1, 0)
+        qc.h(0)
+
+        return qc, param_phi, param_state
 
     else:
         return qc, 0, 0
