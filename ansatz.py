@@ -147,6 +147,8 @@ def build_circuit(n_qubits, n_layers, opt=None):
     
         qc.cnot(1, 0)
         qc.h(0)
+        qc.h(1)
+        qc.cnot(1, 0)
 
         return qc, param_phi, param_state
 
