@@ -152,5 +152,31 @@ def build_circuit(n_qubits, n_layers, opt=None):
 
         return qc, param_phi, param_state
 
+    elif opt == 'omega2':
+        param_phi = ParameterVector('phi', 8)
+        param_state = ParameterVector('state', 2)
+
+        qc.h(0)
+        qc.h(1)
+    
+        qc.ry(param_phi[0], 0)
+        qc.rz(param_phi[1], 0)
+        qc.ry(param_phi[2], 1)
+        qc.rz(param_phi[3], 1)
+    
+        qc.ry(param_state[0], 0)
+        qc.ry(param_state[1], 1)
+        
+        qc.barrier()
+    
+        qc.cnot(1, 0)
+        qc.ry(param_phi[4], 0)
+        qc.rz(param_phi[5], 0)
+        qc.ry(param_phi[6], 1)
+        qc.rz(param_phi[7], 1)
+        qc.cnot(1, 0)
+
+        return qc, param_phi, param_state
+
     else:
         return qc, 0, 0
